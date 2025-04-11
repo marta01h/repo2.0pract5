@@ -1,0 +1,102 @@
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+
+header {
+    background-color: #5f416c;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+header .user-auth a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #57266e;
+}
+
+h1 {
+    margin-top: 30px;
+}
+
+p {
+    max-width: 600px;
+    margin: 10px auto;
+    font-size: 18px;
+    line-height: 1.5;
+    background-color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+img {
+    border-radius: 50%;
+    border: 3px solid #2c3e50;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+form {
+    max-width: 600px;
+    margin: 30px auto;
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+form input, form select, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+form button {
+    background-color: #5f416c;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+
+@media (max-width: 768px) {
+    p, form {
+        margin: 15px;
+    }
+
+    form input, form button {
+        font-size: 15px;
+    }
+
+    img {
+        width: 80px;
+    }
+}

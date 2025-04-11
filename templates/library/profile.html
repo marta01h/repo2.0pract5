@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой профиль</title>
+        <link rel="icon" href="{% static 'images/icons8-80.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body>
+
+{% include 'library/header.html' %}
+
+<h1>Профиль пользователя</h1>
+
+<p><strong>Имя:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+<p><strong>Дата регистрации:</strong> {{ user.date_joined }}</p>
+
+{% if user.profile.avatar %}
+    <p><strong>Аватар:</strong> <img src="{{ user.profile.avatar.url }}" alt="Аватар" width="100"></p>
+{% else %}
+    <p><strong>Аватар:</strong> Не установлен</p>
+{% endif %}
+<h2>Изменить данные профиля</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>
+        <label for="id_username">Имя пользователя:</label>
+        {{ form.username }}
+    </p>
+    <p>
+        <label for="id_email">Email:</label>
+        {{ form.email }}
+    </p>
+    <button type="submit">Сохранить изменения</button>
+</form>
+
+
+{% include 'library/footer.html' %}
+
+</body>
+</html>

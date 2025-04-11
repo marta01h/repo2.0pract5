@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Электронная библиотека</title>
+    <link rel="icon" href="{% static 'images/icons8-80.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}">Главная</a>
+            <a href="{% url 'profile' %}">Мой профиль</a>
+            <a href="{% url 'book_list' %}">Книги</a>
+            <a href="{% url 'test_categories' %}">Тесты</a>
+
+
+        </nav>
+
+        <div class="user-auth">
+            {% if user.is_authenticated %}
+                <span>Добро пожаловать, {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a> | <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        <section class="big-banner">
+            <img src="{% static 'images/IMG_2828.JPG' %}" alt="Большой баннер" class="big-banner-img">
+        </section>
+
+       <section class="categories">
+    <h2>Разделы по программированию</h2>
+    <div class="category-list">
+        <a href="{% url 'books_by_category' 'basics' %}" class="category-item">💻 Основы программирования</a>
+        <a href="{% url 'books_by_category' 'web' %}" class="category-item">🌍 Веб-разработка</a>
+        <a href="{% url 'books_by_category' 'mobile' %}" class="category-item">📱Игры</a>
+        <a href="{% url 'books_by_category' 'ai' %}" class="category-item">🤖 Искусственный интеллект</a>
+        <a href="{% url 'books_by_category' 'devops' %}" class="category-item">🛠 DevOps и администрирование</a>
+    </div>
+</section>
+
+        <section class="tips">
+            <h2>Советы для программистов</h2>
+            <div class="tip">"Код пишут для людей, а не для компьютеров." – Мартин Фаулер</div>
+            <div class="tip">"Ошибка — это не провал, а возможность научиться." – Линус Торвальдс</div>
+            <div class="tip">"Чем проще код, тем лучше." – Роберт Мартин</div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Электронная библиотека. Все права защищены.</p>
+    </footer>
+</body>
+</html>

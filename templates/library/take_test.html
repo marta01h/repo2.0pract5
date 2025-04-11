@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой профиль</title>
+    <link rel="icon" href="{% static 'images/icons8-80.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{% static 'css/take_test.css' %}">
+</head>
+<body>
+
+{% include 'library/header.html' %}
+
+<div class="container">
+    <form method="POST" action="{% url 'take_test' test.id %}" id="test-form">
+        {% csrf_token %}
+
+        <p class="text-muted">Вопрос {{ current_question_index|add:1 }} из {{ total_questions }}</p>
+
+        <h3>{{ question.text }}</h3>
+
+        <div class="list-group">
+            {% for answer in question.choices.all %}
+                <div class="list-group-item">
+                    <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}" id="answer_{{ answer.id }}" class="form-check-input">
+                    <label for="answer_{{ answer.id }}" class="form-check-label">{{ answer.text }}</label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Сообщение об ошибке -->
+        <div id="error-message" class="text-danger mt-2" style="display: none;">
+            Пожалуйста, выберите ответ перед отправкой.
+        </div>
+
+        <input type="hidden" name="current_question_index" value="{{ current_question_index }}">
+
+        <button type="submit" class="btn btn-purple mt-3">Ответить</button>
+    </form>
+
+    {% if current_question_index == total_questions %}
+        <form method="POST" action="{% url 'test_result' test.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success mt-3">Завершить тест</button>
+        </form>
+    {% endif %}
+</div>
+
+{% include 'library/footer.html' %}
+
+<!-- Валидация выбора ответа -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("test-form");
+        const errorMessage = document.getElementById("error-message");
+
+        form.addEventListener("submit", function (event) {
+            const radios = form.querySelectorAll("input[type='radio']");
+            let isChecked = false;
+
+            radios.forEach(radio => {
+                if (radio.checked) {
+                    isChecked = true;
+                }
+            });
+
+            if (!isChecked) {
+                event.preventDefault(); // остановка отправки
+                errorMessage.style.display = "block";
+            } else {
+                errorMessage.style.display = "none";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

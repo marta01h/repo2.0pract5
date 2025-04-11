@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ test.name }}</title>
+  <link rel="stylesheet" href="{% static 'css/test_passing.css' %}">
+</head>
+<body>
+
+<div id="quiz-container">
+  <h2 id="question-title"></h2>
+  <div id="answers-container"></div>
+
+  <button id="next-btn" disabled>Следующий</button>
+  <div id="progress-bar"><div id="progress"></div></div>
+  <div id="timer">Осталось: <span id="time">30</span> сек</div>
+</div>
+
+<div id="result-container" style="display:none;">
+  <h3>Результат</h3>
+  <p>Правильных ответов: <span id="correct-count"></span> из <span id="total-questions"></span></p>
+  <a href="{% url 'test_categories' %}">К категориям тестов</a>
+</div>
+
+<script>
+  const questions = {{ questions|safe }};
+  let current = 0;
+  let correct = 0;
+  let timer = 30;
+  let interval;
+
+  const title = document.getElementById("question-title");
+  const answers = document.getElementById("answers-container");
+  const nextBtn = document.getElementById("next-btn");
+  const progress = document.getElementById("progress");
+  const timeDisplay = document.getElementById("time");
+  const resultContainer = document.getElementById("result-container");
+  const quizContainer = document.getElementById("quiz-container");
+
+  function showQuestion() {
+    const q = questions[current];
+    title.innerText = q.text;
+    answers.innerHTML = "";
+    nextBtn.disabled = true;
+
+    q.answers.forEach((ans) => {
+      const btn = document.createElement("button");
+      btn.innerText = ans.text;
+      btn.className = "answer-btn";
+      btn.onclick = () => checkAnswer(btn, ans.is_correct);
+      answers.appendChild(btn);
+    });
+
+    updateProgress();
+    startTimer();
+  }
+
+  function checkAnswer(button, isCorrect) {
+    stopTimer();
+    const all = document.querySelectorAll(".answer-btn");
+    all.forEach(b => {
+      b.disabled = true;
+      if (b === button && isCorrect) {
+        b.classList.add("correct");
+      } else if (b === button && !isCorrect) {
+        b.classList.add("wrong");
+      } else if (b !== button && b.innerText === button.innerText && isCorrect) {
+        b.classList.add("correct");
+      }
+    });
+    if (isCorrect) correct++;
+    nextBtn.disabled = false;
+  }
+
+  function nextQuestion() {
+    current++;
+    if (current < questions.length) {
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }
+
+  function updateProgress() {
+    const percent = ((current) / questions.length) * 100;
+    progress.style.width = percent + "%";
+  }
+
+  function startTimer() {
+    timer = 30;
+    timeDisplay.innerText = timer;
+    interval = setInterval(() => {
+      timer--;
+      timeDisplay.innerText = timer;
+      if (timer === 0) {
+        stopTimer();
+        nextBtn.disabled = false;
+      }
+    }, 1000);
+  }
+
+  function stopTimer() {
+    clearInterval(interval);
+  }
+
+  function showResult() {
+    quizContainer.style.display = "none";
+    resultContainer.style.display = "block";
+    document.getElementById("correct-count").innerText = correct;
+    document.getElementById("total-questions").innerText = questions.length;
+  }
+
+  nextBtn.addEventListener("click", nextQuestion);
+  showQuestion();
+</script>
+
+</body>
+</html>

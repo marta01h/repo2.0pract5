@@ -1,0 +1,118 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ book.title }} — Читалка</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+        <link rel="icon" href="{% static 'images/icons8-80.png' %}" type="image/x-icon">
+
+
+    <style>
+        .pdf-reader {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+{% include 'library/header.html' %}
+
+<div class="container">
+    <h2 class="text-center my-4">{{ book.title }}</h2>
+
+    <div class="pdf-reader">
+        <canvas id="pdf-canvas"></canvas>
+
+        <div class="controls">
+            <button id="prev" class="btn btn-secondary">← Предыдущая</button>
+            <span class="mx-3">Страница: <span id="page-num"></span> / <span id="page-count"></span></span>
+            <button id="next" class="btn btn-secondary">Следующая →</button>
+        </div>
+    </div>
+</div>
+
+{% include 'library/footer.html' %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+    const url = "{{ book.file.url }}";
+
+    let pdfDoc = null,
+        pageNum = 1,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 1.2,
+        canvas = document.getElementById('pdf-canvas'),
+        ctx = canvas.getContext('2d');
+
+    function renderPage(num) {
+        pageRendering = true;
+        pdfDoc.getPage(num).then(function(page) {
+            const viewport = page.getViewport({scale: scale});
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+            };
+            const renderTask = page.render(renderContext);
+
+            renderTask.promise.then(function () {
+                pageRendering = false;
+                if (pageNumPending !== null) {
+                    renderPage(pageNumPending);
+                    pageNumPending = null;
+                }
+            });
+        });
+
+        document.getElementById('page-num').textContent = num;
+    }
+
+    function queueRenderPage(num) {
+        if (pageRendering) {
+            pageNumPending = num;
+        } else {
+            renderPage(num);
+        }
+    }
+
+    function onPrevPage() {
+        if (pageNum <= 1) return;
+        pageNum--;
+        queueRenderPage(pageNum);
+    }
+
+    function onNextPage() {
+        if (pageNum >= pdfDoc.numPages) return;
+        pageNum++;
+        queueRenderPage(pageNum);
+    }
+
+    pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        document.getElementById('page-count').textContent = pdfDoc.numPages;
+        renderPage(pageNum);
+    });
+
+    document.getElementById('prev').addEventListener('click', onPrevPage);
+    document.getElementById('next').addEventListener('click', onNextPage);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #5f416c;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+header .user-auth a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.book-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
+    width: 100%;
+    max-width: 250px;
+}
+
+.book-item:hover {
+    transform: scale(1.05);
+}
+
+.book-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.book-item h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.book-item p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Кнопки */
+.book-item a {
+    display: block;
+    background-color: #5f416c;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.book-item a:hover {
+    background-color: #4b3256;
+}
+
+/* Футер */
+footer {
+    background-color: #5f416c;
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .book-list {
+        grid-template-columns: repeat(3, 1fr); /* 3 книги в ряд на средних экранах */
+    }
+}
+
+@media (max-width: 900px) {
+    .book-list {
+        grid-template-columns: repeat(2, 1fr); /* 2 книги в ряд на планшетах */
+    }
+}
+
+@media (max-width: 600px) {
+    .book-list {
+        grid-template-columns: repeat(1, 1fr); /* 1 книга в ряд на телефонах */
+    }
+}

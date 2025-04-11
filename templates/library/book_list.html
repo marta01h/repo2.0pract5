@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список книг</title>
+        <link rel="icon" href="{% static 'images/icons8-80.png' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{% static 'css/book_list.css' %}">
+</head>
+<body>
+{% include 'library/header.html' %} 
+
+{% if error %}
+    <p style="color: red; font-weight: bold;">Ошибка: {{ error }}</p>
+{% endif %}
+
+{% if user.is_authenticated %}
+    <h1>Список книг</h1>
+    <p>Количество книг: {{ books.count }}</p>  
+
+    {% if books %}
+        <div class="book-list">
+            {% for book in books %}
+                <div class="book-item">
+                    <h2>{{ book.title }}</h2>
+                    <p>Автор: {{ book.author }}</p>
+                    <p>{{ book.description }}</p>
+                    {% if book.cover %}
+                        <img src="{{ book.cover.url }}" alt="Обложка книги">
+                    {% else %}
+                        <p>Обложка отсутствует.</p>
+                    {% endif %}
+                    {% if book.file %}
+                            <a href="{% url 'read_pdf' book.id %}" class="btn btn-purple">Читать онлайн</a>
+
+                    {% else %}
+                        <p>Файл книги отсутствует.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Нет доступных книг.</p>
+    {% endif %}
+{% else %}
+    <p>Для доступа к этому разделу нужно войти в аккаунт. <a href="{% url 'login' %}">Войти</a></p>
+{% endif %}
+{% include 'library/footer.html' %}
+
+</body>
+</html>

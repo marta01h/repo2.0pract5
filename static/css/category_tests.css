@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #5f416c;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+header .user-auth a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 24px;
+    color: #333;
+}
+
+.test-list {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.test-list div {
+    background: #fff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.test-list a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #5f416c;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.test-list a:hover {
+    background-color: #5f416c;
+    color: white;
+    border-radius: 5px;
+}
+
+footer {
+    background-color: #5f416c;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

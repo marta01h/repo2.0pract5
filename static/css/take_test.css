@@ -1,0 +1,124 @@
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+header {
+    background-color: #5f416c;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+header .user-auth a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+
+/* Основной контент */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-bottom: 80px; /* чтобы футер не перекрывал */
+}
+
+h3 {
+    margin-top: 20px;
+    color: #333;
+}
+
+p.text-muted {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+/* Варианты ответов */
+.list-group-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f1e8f7;
+}
+
+input[type="radio"] {
+    margin-right: 15px;
+}
+
+/* Кнопки */
+.btn-purple {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+    color: white;
+}
+
+.btn-purple:hover {
+    background-color: #5a32a3;
+    border-color: #5a32a3;
+}
+
+.btn-success {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.btn-success:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+
+
+/* Футер */
+footer {
+    background-color: #5f416c;
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .book-list {
+        grid-template-columns: repeat(3, 1fr); /* 3 книги в ряд на средних экранах */
+    }
+}
+
+@media (max-width: 900px) {
+    .book-list {
+        grid-template-columns: repeat(2, 1fr); /* 2 книги в ряд на планшетах */
+    }
+}
+
+@media (max-width: 600px) {
+    .book-list {
+        grid-template-columns: repeat(1, 1fr); /* 1 книга в ряд на телефонах */
+    }
+}

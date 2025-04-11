@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесты</title>
+    <link rel="icon" href="{% static 'images/icons8-80.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/test.css' %}">
+</head>
+<body>
+
+{% include 'library/header.html' %}
+
+<h2>Выберите категорию тестов</h2>
+<div class="category-list">
+    {% for category in categories %}
+        <a href="{% url 'category_tests' category.slug %}" class="category-item">
+            {{ category.name }}
+        </a>
+    {% endfor %}
+</div>
+
+{% include 'library/footer.html' %}
+
+</body>
+</html>
